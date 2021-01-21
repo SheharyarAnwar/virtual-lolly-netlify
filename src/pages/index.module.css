@@ -1,0 +1,31 @@
+.header {
+  height: 15vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.root {
+  height: 50vh;
+  width: 70%;
+  min-width: 300px;
+  margin: 5% auto;
+  position: relative;
+}
+.container {
+  display: flex;
+  justify-content: space-between;
+
+  flex-wrap: wrap;
+}
+.formContainer {
+  height: 400px;
+  width: 350px;
+}
+/* @media only screen and (max-width: 900px) {
+  .add {
+    margin: 20px auto;
+  }
+  .root {
+    margin-top: 10%;
+  }
+} */
