@@ -6,9 +6,9 @@ export const GET_LOLLIES = gql`
       recipientName
       message
       senderName
-      flavourTop
-      flavourMiddle
-      flavourBottom
+      fillTop
+      fillMiddle
+      fillBottom
       lollyPath
     }
   }
@@ -18,24 +18,24 @@ export const CREATE_LOLLY = gql`
     $recipientName: String!,
     $message: String!,
     $senderName: String!,
-    $flavourTop: String!,
-    $flavourMiddle: String!,
-    $flavourBottom: String!
+    $fillTop: String!,
+    $fillMiddle: String!,
+    $fillBottom: String!
   ) {
     createLolly(
       recipientName: $recipientName,
       message: $message,
       senderName: $senderName,
-      flavourTop: $flavourTop,
-      flavourMiddle: $flavourMiddle,
-      flavourBottom: $flavourBottom
+      fillTop: $fillTop,
+      fillMiddle: $fillMiddle,
+      fillBottom: $fillBottom
     ) {
       recipientName
       message
       senderName
-      flavourTop
-      flavourMiddle
-      flavourBottom
+      fillTop
+      fillMiddle
+      fillBottom
       lollyPath
     }
   }

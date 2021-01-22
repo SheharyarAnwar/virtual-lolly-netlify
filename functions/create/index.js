@@ -10,9 +10,9 @@ const typeDefs = gql`
     recipientName: String!
     message: String!
     senderName: String!
-    flavourTop: String!
-    flavourMiddle: String!
-    flavourBottom: String!
+    fillTop: String!
+    fillMiddle: String!
+    fillBottom: String!
     lollyPath: String!
   }
   type Mutation {
@@ -20,14 +20,14 @@ const typeDefs = gql`
       recipientName: String!
       message: String!
       senderName: String!
-      flavourTop: String!
-      flavourMiddle: String!
-      flavourBottom: String!
+      fillTop: String!
+      fillMiddle: String!
+      fillBottom: String!
     ): Lolly
   }
 `
 const client = new faunadb.Client({
-  secret: "fnAEAGbto6ACCCnLBFfZrddyq5WqRBV_Qtne9CyD",
+  secret: process.env.FAUNADB_SECRET,
 })
 
 const resolvers = {
