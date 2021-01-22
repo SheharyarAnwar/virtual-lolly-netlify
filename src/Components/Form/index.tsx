@@ -3,14 +3,24 @@ import { Formik, Form } from "formik"
 import { yupValidationSchema } from "./../../Validation/schema"
 import TextField from "../TextField"
 import classes from "./index.module.css"
-const Index = () => {
+interface FormProps {
+  onFormSubmit: (
+    recipientName: string,
+    message: string,
+    senderName: string
+  ) => void
+}
+const Index: React.FC<FormProps> = ({ onFormSubmit }) => {
   return (
     <>
       <Formik
         initialValues={{ recipientName: "", message: "", senderName: "" }}
         initialErrors={{ message: "Required" }}
         validationSchema={yupValidationSchema}
-        onSubmit={values => console.log(values)}
+        onSubmit={values => {
+          const { recipientName, message, senderName } = values
+          onFormSubmit(recipientName, message, senderName)
+        }}
       >
         <Form className={classes.form}>
           <TextField name="recipientName" placeholder="Recipient Name" />
