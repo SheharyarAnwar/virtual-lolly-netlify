@@ -59,7 +59,9 @@ const Index = () => {
           console.log("error while building", err)
         })
   }, [data])
-  const shareLink = `${window.origin}/${data?.createLolly?.lollyPath}`
+  const shareLink =
+    typeof window !== "undefined" &&
+    `${window.origin}/${data?.createLolly?.lollyPath}`
   return (
     <>
       <Header />
