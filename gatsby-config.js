@@ -39,5 +39,14 @@ module.exports = {
         },
       },
     },
+    {
+      resolve: "gatsby-source-graphql",
+      options: {
+        typeName: "SWAPI",
+        fieldName: "swapi",
+        url:
+          "https://virtual-lolly-sheharyar.netlify.app/.netlify/functions/create",
+      },
+    },
   ],
 }

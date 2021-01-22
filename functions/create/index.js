@@ -53,9 +53,10 @@ const resolvers = {
     createLolly: async (_, args) => {
       const id = shortid.generate()
       args.lollyPath = id
+      console.log(args, "___args")
 
       const result = await client.query(
-        q.Create(q.Collection("lolly"), {
+        q.Create(q.Collection("lollies"), {
           data: args,
         })
       )

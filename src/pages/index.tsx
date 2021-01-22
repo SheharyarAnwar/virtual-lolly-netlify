@@ -1,5 +1,8 @@
+import { useMutation } from "@apollo/client"
 import React, { useEffect, useState } from "react"
+import { CREATE_LOLLY } from "../Apollo/queries"
 import Form from "../Components/Form"
+import Header from "../Components/Header"
 import LollyMaker from "../Components/LollyMaker"
 import classes from "./index.module.css"
 
@@ -13,6 +16,8 @@ export interface LollyData {
 }
 const Index = () => {
   const [lollyData, setLollyData] = useState<LollyData>()
+  const [buildError, setBuilError] = useState<boolean>(false)
+  const [buildLoading, setBuildLoading] = useState<boolean>(false)
   const [onFormSubmitted, setOnFormSubmitted] = useState<boolean>(false)
   const onColorChangedHandler = (
     fillTop: string,
@@ -33,24 +38,59 @@ const Index = () => {
     })
     setOnFormSubmitted(true)
   }
+  const [addLolly, { data, loading, error }] = useMutation(CREATE_LOLLY)
   useEffect(() => {
     if (onFormSubmitted) {
-      console.log(lollyData)
+      addLolly({ variables: { ...lollyData } })
     } else return
   }, [onFormSubmitted])
+  useEffect(() => {
+    setBuildLoading(true)
+    data &&
+      fetch("https://api.netlify.com/build_hooks/600b3801bd7fe425137ed063", {
+        method: "POST",
+      })
+        .then(async res => {
+          setBuildLoading(false)
+          console.log(await res.json())
+        })
+        .catch(err => {
+          setBuildLoading(false)
+          console.log("error while building", err)
+        })
+  }, [data])
+  const shareLink = `${window.origin}/${data?.createLolly?.lollyPath}`
   return (
     <>
-      <div className={classes.header}>
-        <h4>Lolly Maker</h4>
-      </div>
+      <Header />
       <div className={classes.root}>
         <div className={classes.container}>
           <LollyMaker onColorChanged={onColorChangedHandler} />
           <div className={classes.formContainer}>
-            <Form onFormSubmit={onFormSubmittedHandler} />
+            {loading ? (
+              <div className={classes.loader} />
+            ) : (
+              <Form onFormSubmit={onFormSubmittedHandler} />
+            )}
           </div>
         </div>
       </div>
+      {error && (
+        <div className={classes.log}>
+          <h4>{error?.message}</h4>
+        </div>
+      )}
+      {!buildLoading && data && (
+        <div className={classes.log}>
+          <p>Link : {shareLink}</p>
+          <button
+            onClick={() => navigator.clipboard.writeText(shareLink)}
+            style={{ marginTop: "10px" }}
+          >
+            Copy Link
+          </button>
+        </div>
+      )}
     </>
   )
 }
